@@ -1,4 +1,7 @@
 # Final_Project
+
+![Project Design](project_flow.png)
+
 # Stock Price Prediction Using Time Series Data:
 This project focuses on time series prediction using a hybrid Convolutional Neural Network (CNN) - Long Short-Term Memory (LSTM) model. The goal is to forecast future values of finaicial instrument based on historical data.
 
