@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Project - Prediction Model</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        main {
+            padding: 20px;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Prediction Model</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-data.html">Stock Live Data</a></li>
+            <li><a href="indicators.html">Technical Indicators</a></li>
+            <li><a href="news.html">Market News</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Todays prediction</h2>
+        <p>You can upload price for last 60 days to make prediction of todays price</p>
+    </main>
+    <body>
+        <h1>Stock Prediction</h1>
+        {% if predict %}
+        <h2>Prediction Result</h2>
+        <p>Last Predicted Price: {{ last_predicted_price }}</p>
+        {% endif %}
+        <hr>
+        <!-- Add the file upload form -->
+        <form action="/" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file">
+          <input type="submit" value="Upload and Predict">
+        </form>
+      </body>
+    
+</body>
+</html>

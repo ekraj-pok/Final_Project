@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Project - Stock Live Data</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        main {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #chartDiv {
+            width: 100%;
+        }
+
+        #table {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Stock Live Data</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/prediction.html">Prediction Model</a></li>
+            <li><a href="/indicators.html">Technical Indicators</a></li>
+            <li><a href="/news.html">Market News</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Stock Live Data Content</h2>
+        <div>
+            <form id="stockForm" method="POST">
+                <label for="stockSelect">Select a Stock Symbol:</label>
+                <select id="stockSelect" name="stockSelect" onchange="submitForm()">
+                    {% for symbol in symbols %}
+                    <option value="{{ symbol }}" {% if symbol == selected_stock %}selected{% endif %}>{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+                <label for="intervalSelect">Select an Interval:</label>
+                <select id="intervalSelect" name="intervalSelect">
+                    <!-- Options for interval selection -->
+                    <option value="1m" {% if timeframe == '1m' %}selected{% endif %}>Minutes</option>
+                    <option value="1h" {% if timeframe == '1h' %}selected{% endif %}>Hourly</option>
+                    <option value="1d" {% if timeframe == '1d' %}selected{% endif %}>Daily</option>
+                    <option value="1wk" {% if timeframe == '1wk' %}selected{% endif %}>Weekly</option>
+                    <option value="1mo" {% if timeframe == '1mo' %}selected{% endif %}>Monthly</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="chart-container">
+            <div id="chartDiv">
+                {{ chart|safe }}
+            </div>
+
+            <h2>Historical Price</h2>
+            <div id="table">
+                <table>
+                    {{ historical_data|safe }}
+                </table>
+                <form action="/download" method="POST">
+                <input type="submit" value="Download CSV">
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function submitForm() {
+            document.getElementById("stockForm").submit();
+        }
+    </script>
+
+</body>
+</html>
