@@ -76,9 +76,9 @@ def calculate_technical_indicators(df):
     
     return df
 
-    def train_scaler():
-        train_size = len(data* 0.90)
-        train_data = data[:train_size]
-        scaler = MinMaxScaler()
-        scaler.fit(data)
-        return scaler
+def train_scaler():
+    train_size = len(data* 0.90)
+    train_data = data[:train_size]
+    scaler = MinMaxScaler()
+    scaler.fit(data)
+    return scaler

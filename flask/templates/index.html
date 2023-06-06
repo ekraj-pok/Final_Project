@@ -4,53 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligence Investor app</title>
+    <title>Smart Trader app</title>
 <head>
     <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Price Project - Homepage</title>
     <style>
         /* Add some basic styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            width: 100%;
         }
-        
-        header {
+
+            header {
+            flex:content;
+            align-items: center;
+            justify-content: space-between;
             background-color: #333;
             color: #fff;
-            padding: 10px;
             text-align: center;
+            position:sticky;
+            top: 0;
+            border-bottom: 2px solid snow;
+            margin-bottom: 5px;
         }
-        
+
         nav {
             background-color: #f4f4f4;
             padding: 10px;
+            
         }
-        
+
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-        }
+            padding: 10px;
         
-        nav ul li {
+        }
+
+        nav ul li a {
             margin: 0 10px;
+            padding: 10px;
+            background-color:rgb(90, 203, 156);
+            color: rgb(245, 249, 249);
+            border-radius: 5px;
         }
-        
+
         main {
-            padding: 20px;
+            width: 100%
         }
-        
+        a {
+            text-decoration: none;
+        }
+
+        h1 a {
+            color: #fff
+        }
         h2 {
             margin-top: 0;
+            text-align: center;
+            background-color: #8c987a;
+            padding: 5px;
+            width: 100%;
+        }
+
+        h3 {
+            margin-top: 0;
+            text-align: left;
+            background-color: #f9f9f6;
+            margin-left: 8%;
+            margin-right: 8%;
+
         }
         footer {
-            background-color: #f4f4f4;
+            background-color: #dcd5d5;
             padding: 6px;
             display: flex;
             justify-content: center;
@@ -65,14 +97,30 @@
 
         footer ul li {
             margin: 0 6px;
+            background-color:rgb(231, 236, 234);
+            color: rgb(5, 10, 10);
+            border-radius: 5px;
         }
+        
+        p {
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        hr {
+            color:black;
+            border: 3px solid black;
+        }
+        
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to the Stock Price Project</h1>
+        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
+        <p>Time Series Based Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
     </header>
-
+    
+        
     <nav>
         <ul>
             <li><a href="prediction.html">Prediction Model</a></li>
@@ -83,12 +131,74 @@
     </nav>
 
     <main>
-        <h2>Homepage Content</h2>
-        <p>This is the homepage of the Stock Price Project. You can navigate to different sections using the navigation bar above.</p>
+        <h2>Project Introduction</h2>
+        <p>This project aims to leverage the power of deep learning, specifically Convolutional Neural Networks and Long Short-Term Memory (CNN-LSTM) model,
+             to predict the closing stock prices for a one-day forward period based on time series data. Additionally, the project integrates technical analysis-based recommendations 
+             to guide investors while making buy, hold, or sell decisions.</p>
+
+        <br>
+        <br>
+
+        <h2>Objective</h2>
+        <div>
+            <h3>Key Objectives:</h3>
+            <p>1. Develop a CNN-LSTM model to predict stock prices for the next trading day based on historical price data.</p>
+            <p>2. Incorporate technical analysis indicators to generate buy, hold, or sell recommendations.</p>
+        </div>
+        <br>
+        <br>
+
+        <h2>Methodology</h2>
+        <div>
+            <p>1. Data Collection: Gather historical stock price data using yfinance(python wrapper for Yahoo Finance).</p>
+            <p>2. Data Preprocessing: Clean the collected data, handle missing values, and decompose the data to check seasonality, trend, and residual factors.</p>
+            <p>3. Feature Engineering: Select and engineer key features, including technical analysis indicators such 
+                as simple moving averages, exponential moving average, relative strength index (RSI), MACD, BIAS, Stochastic K,
+                Stochastic D. And time series component including trend, seasonality, and residual variables.</p>
+            <p>4. Model Development: Design, fine-tune model using the preprocessed data to predict the next 
+                day's stock prices. </p>
+            <p>5. Model Evaluation: Assess the model's performance by comparing the predicted prices against the actual stock prices. 
+                Using metrics such as Root Mean Squared Error (RMSE) and r-squared.</p>
+            <p>6. Recommendation: This section use technical analysis indicators to generate buy, hold, or sell recommendations based on predefined rules and thresholds.</p>
+        </div>  
+
+        <h2>Expected Outcome</h2>
+        <div>
+            <p>1. A trained CNN-LSTM model capable of predicting stock prices with reasonable accuracy.</p>
+            <p>1. A technical analysis-driven recommendation system that suggests buy, hold, or sell actions based on the predicted prices and technical indicators.</p>
+        </div>
+
+        <h2>Model architecture</h2>
+        <img src="{{ url_for('static', filename=image_filename) }}" alt="Project Flow">
+        <p> </p>
     </main>
+
+    <nav>
+        <ul>
+            <li><a href="prediction.html">Prediction Model</a></li>
+            <li><a href="live-data.html">Stock Live Data</a></li>
+            <li><a href="indicators.html">Technical Indicators</a></li>
+            <li><a href="news.html">Market News</a></li>
+        </ul>
+    </nav>
+    
+    <hr/>
+    <p style = "text-align: center;">Disclaimer:</p>
+    <p style="font-size: smaller; color: #333;">Investing in the stock market involves risks, 
+        and it's important to conduct thorough research and analysis before making any investment decisions.
+         The predictions generated by this model should be used as a tool for informational purposes only
+         and should not be solely relied upon for investment purposes. It's recommended to consult with financial
+          advisors or professionals who specialize in the stock market before making any investment decisions. </p>
+    <p style="font-size: smaller; color: #333;"> <b>Use at Your Own Risk:</b> The project is provided "as is"
+         without any warranties or guarantees, express or implied. The creators and developers disclaim
+          any liability for any direct, indirect, incidental, consequential, or special damages arising
+           out of or in any way connected with the use of this project</p>
+
+
+    <hr/>
     <footer>
         <ul>
-            <li><a href="https://github.com/ekraj-pok" , target="_blank">GitHub</a></li>
+            <li><a href="https://github.com/stars/ekraj-pok/lists/projects" , target="_blank">GitHub</a></li>
             <li><a href="https://linkedin.com/in/ekraj", target="_blank">LinkedIn</a></li>
             <li><a href="mailto:ekraj.pok@gmail.com", target="_blank">Email</a></li>
         </ul>

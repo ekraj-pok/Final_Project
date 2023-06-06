@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Price Project - Stock Live Data</title>
+    <title>Smart Trader app</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         /* Add some basic styling */
@@ -12,18 +12,26 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            width: 100%;
         }
 
-        header {
+            header {
+            align-items: center;
+            justify-content: space-between;
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
+            position:sticky;
+            top: 0;
+            border-bottom: 2px solid snow;
+            margin-bottom: 10px;
         }
 
         nav {
             background-color: #f4f4f4;
             padding: 10px;
+            
         }
 
         nav ul {
@@ -32,45 +40,84 @@
             padding: 0;
             display: flex;
             justify-content: center;
+            padding: 10px;
+        
         }
 
-        nav ul li {
+        nav ul li a {
             margin: 0 10px;
+            padding: 10px;
+            background-color:rgb(90, 203, 156);
+            color: rgb(245, 249, 249);
+            border-radius: 5px;
         }
 
         main {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            width: 100%
+        }
+        a {
+            text-decoration: none;
         }
 
+        h1 a {
+            color: #fff
+        }
         h2 {
             margin-top: 0;
+            text-align: center;
+            background-color: #a7a59d;
+            padding: 5px;
+            width: 100%;
         }
 
-        .chart-container {
+        h3 {
+            margin-top: 0;
+            text-align: left;
+            background-color: #f9f9f6;
+            margin-left: 8%;
+            margin-right: 8%;
+
+        }
+        footer {
+            background-color: #f4f4f4;
+            padding: 6px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
+            justify-content: center;
         }
 
-        #chartDiv {
-            width: 100%;
+        footer ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
         }
 
+        footer ul li {
+            margin: 0 6px;
+        }
+        
+        p {
+            margin-left: 8%;
+            margin-right: 8%;
+        }
+
+        hr {
+            color:black;
+            border: 3px solid black;
+        }
         #table {
-            width: 100%;
+            align-content: center;
+            align-items: center;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Stock Live Data</h1>
+        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
+        <p>Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
     </header>
+       
 
     <nav>
         <ul>

@@ -21,16 +21,24 @@ from sklearn.metrics import mean_squared_error
 
 
 
+
 app = Flask(__name__)
 app.secret_key = 'Todays_Scession'  # Set the secret key for session management
 
+
+# define route for home page
 @app.route('/')
 def home():
-    return render_template('index.html')
+    logo_filename = "my_logo.png"
+    image_filename = 'project_flow.png'
+    return render_template('index.html', image_filename = image_filename, logo_filename = logo_filename)
 
+
+# Define route for prediction page
 @app.route('/prediction.html', methods=['GET', 'POST'])
 def predict():
     # Check if a file is uploaded
+    logo_filename = "my_logo.png"
     if request.method == 'POST' and 'file' in request.files:
         # Get the uploaded file
         file = request.files['file']
@@ -74,41 +82,43 @@ def predict():
         last_predicted_price = predicted_prices.iloc[-1][0]
 
         # Render the template with the prediction results
-        return render_template('prediction.html', predict=True, last_predicted_price=last_predicted_price)
+        return render_template('prediction.html', predict=True, last_predicted_price=last_predicted_price, logo_filename = logo_filename)
 
     # Render the template without prediction results
-    return render_template('index.html', predict=False)
+    return render_template('prediction.html', predict=False, logo_filename = logo_filename)
 
 
-
+# Define route for live-data page
 @app.route('/live-data.html', methods=['GET', 'POST'])
+
 def live_data():
+    logo_filename = "my_logo.png"
     # Define the stock symbols you want to fetch data for
     symbols = ['ALTR.LS', 'BCP.LS', 'SLBEN.LS', 'CFN.LS', 'COR.LS', 'CTT.LS', 'EDP.LS', 'EDPR.LS', 'ESON.LS', 'FCP.LS', 'GALP.LS', 'GLINT.LS',
                'GVOLT.LS', 'IBS.LS', 'IPR.LS', 'INA.LS', 'JMT.LS', 'LIG.LS', 'MAR.LS', 'MCP.LS', 'MRL.LS', 'EGL.LS', 'NOS.LS', 'NBA.LS', 'PHR.LS',
                'RAM.LS', 'RED.LS', 'RENE.LS', 'SEM.LS', 'SON.LS', 'SNC.LS', 'SCP.LS', 'TDSA.LS', 'NVG.LS', 'VAF.LS', '^STOXX50E', '^EVZ', 'PSI20.LS']
 
-    intervals = ["1m", "1h", "1d", "1wk", "1mo"]  # Available intervals
+    intervals = ["1d", "1h", "1m", "1wk", "1mo"]  # Available intervals
 
     if request.method == "POST":
         selected_stock = request.form["stockSelect"]
         selected_interval = request.form['intervalSelect']
     else:
         selected_stock = symbols[10]
-        selected_interval = intervals[2]
+        selected_interval = intervals[0]
 
     today = datetime.datetime.now().date()
     
     # Set the appropriate period and start date based on the selected interval
-    if selected_interval == '1m':  # Minute interval
-        period = '1d'
-        start = today - datetime.timedelta(days=5)
+    if selected_interval == '1d':  # Daily interval
+        period = '2y'
+        start = today - datetime.timedelta(days=2*365)
     elif selected_interval == '1h':  # Hourly interval
         period = '30d'
         start = today - datetime.timedelta(days=30)
-    elif selected_interval == '1d':  # Daily interval
-        period = '2y'
-        start = today - datetime.timedelta(days=2*365)
+    elif selected_interval == '1m':  # Minute interval
+        period = '1d'
+        start = today - datetime.timedelta(days=5)
     elif selected_interval == '1wk':  # Weekly interval
         period = '2y'
         start = today - datetime.timedelta(days=2*365)
@@ -163,10 +173,12 @@ def live_data():
 
     chart = fig.to_html(full_html=True)
 
+
     return render_template('live-data.html', chart=chart, symbols=symbols, intervals=intervals,
-                           selected_stock=selected_stock, selected_interval=selected_interval, historical_data=data.head(60).to_html())
+                           selected_stock=selected_stock, selected_interval=selected_interval, historical_data=data.head(60).to_html(), logo_filename = logo_filename)
     
 @app.route('/download', methods=['POST'])
+
 def download():
     # Retrieve the historical data from the session
     data_json = session['stock_data'].get(selected_stock)
@@ -184,7 +196,26 @@ def download():
 
     # Return an error message if historical data is not found in the session
     return "No historical data available for download."
-    
+
+
+# Define route for technical indicator
+@app.route('/indicators.html', methods = ["GET", "POST"])
+
+def technical_indicator():
+    logo_filename = "my_logo.png"
+
+    return render_template('indicators.html', logo_filename = logo_filename)
+
+
+
+# Define route for market related news.
+@app.route('/news.html', methods = ["GET", "POST"])
+def get_market_news():
+    logo_filename = "my_logo.png"
+
+    return render_template("news.html", logo_filename = logo_filename)
+
+
 
 if __name__ == '__main__':
     app.debug = True
