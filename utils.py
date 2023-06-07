@@ -28,7 +28,7 @@ def additive_decom(df):
     df["Seasonality"] = result.seasonal
     df["Residual"] = result.resid
     # Splitting data in to target, features and taking seasonality seperately, Looking at the pattern of stock seasonality pattern is constant every year so we will take it now.
-    df["target"] = (df["Close"].shift(-1).fillna(0))
+    df["target"] = df["Close"].shift(-1).fillna(0)
     return df 
 
 def calculate_technical_indicators(df):
@@ -88,6 +88,9 @@ def fit_scaler(X, y):
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
     y_scaled = scaler.fit_transform(y.values.reshape(-1, 1))
+    
+    inverse_scaler = MinMaxScaler()
+    inverse_scaler.fit(y_scaled)
 
-    return X_scaled, y_scaled, scaler
+    return X_scaled, y_scaled, inverse_scaler
 

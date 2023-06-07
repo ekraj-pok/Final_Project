@@ -116,8 +116,8 @@
 </head>
 <body>
     <header>
-        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
-        <p>Time Series Based Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="40", height="40">SmartTrader</a></h1>
+        <p style="font-size: 13px;">Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
     </header>
     
         
@@ -141,7 +141,6 @@
 
         <h2>Objective</h2>
         <div>
-            <h3>Key Objectives:</h3>
             <p>1. Develop a CNN-LSTM model to predict stock prices for the next trading day based on historical price data.</p>
             <p>2. Incorporate technical analysis indicators to generate buy, hold, or sell recommendations.</p>
         </div>
@@ -171,6 +170,23 @@
         <h2>Model architecture</h2>
         <img src="{{ url_for('static', filename=image_filename) }}" alt="Project Flow">
         <p> </p>
+
+        <br>
+        <br>
+
+        <h2>Model Evaluation</h2>
+        <div>
+            <p> After fine-tuning the model using the train set, performance of best model is measured using Root Mean Squared Error, RMSE and the  accuracy score (R-squared) on the test set.
+            <p>The results obtained are as follows: <br>
+            <p>R-squared: 0.745
+                The R-squared value of 0.745 indicates that our model explains approximately 74.5% of the variance in the target variable.</p> 
+            <p>RMSE: 0.63
+                The Root Mean Squared Error (RMSE) of 0.63 represents the average difference between the predicted values and the actual values in the test set.</p>
+            <p> </p>
+        </div>
+
+
+    
     </main>
 
     <nav>

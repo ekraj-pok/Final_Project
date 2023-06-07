@@ -20,17 +20,18 @@
             justify-content: space-between;
             background-color: #333;
             color: #fff;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
             position:sticky;
             top: 0;
             border-bottom: 2px solid snow;
             margin-bottom: 10px;
+            z-index: 100;
         }
 
         nav {
             background-color: #f4f4f4;
-            padding: 10px;
+            padding: 5px;
             
         }
 
@@ -114,8 +115,8 @@
 
 <body>
     <header>
-        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
-        <p>Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="40", height="40">SmartTrader</a></h1>
+        <p style="font-size: 13px;">Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
     </header>
        
 
@@ -141,9 +142,9 @@
                 <label for="intervalSelect">Select an Interval:</label>
                 <select id="intervalSelect" name="intervalSelect">
                     <!-- Options for interval selection -->
+                    <option value="1d" {% if timeframe == '1d' %}selected{% endif %}>Daily</option>
                     <option value="1m" {% if timeframe == '1m' %}selected{% endif %}>Minutes</option>
                     <option value="1h" {% if timeframe == '1h' %}selected{% endif %}>Hourly</option>
-                    <option value="1d" {% if timeframe == '1d' %}selected{% endif %}>Daily</option>
                     <option value="1wk" {% if timeframe == '1wk' %}selected{% endif %}>Weekly</option>
                     <option value="1mo" {% if timeframe == '1mo' %}selected{% endif %}>Monthly</option>
                 </select>
@@ -151,20 +152,24 @@
             </form>
         </div>
 
-        <div class="chart-container">
-            <div id="chartDiv">
+        <div class="chart-container", style="display:flex; flex-direction: column; justify-content: center; width: 100%;">
+            <div id="chartDiv" style="height: 20%">
                 {{ chart|safe }}
             </div>
 
-            <h2>Historical Price</h2>
-            <div id="table">
-                <table>
-                    {{ historical_data|safe }}
-                </table>
-                <form action="/download" method="POST">
-                <input type="submit" value="Download CSV">
-                </form>
-            </div>
+            <h2 style = "align-items: center;">Historical Price</h2>
+                <div id="table" style="display:flex; justify-content:center; width:100%">
+                    <table>
+                        {{ historical_data|safe }}
+                    </table>
+                </div>
+                <a href="dataframe.csv" download>Download</a>
+                <!-- <form action="/download" method="POST" style="width:100%; display:flex; justify-content:center">
+                    <input type="hidden" name="csv_data" value="{{ historical_data }}">
+                    <input type="submit" value="Download CSV" download="historical_data.csv">
+                </form> -->
+
+                
         </div>
     </main>
 
