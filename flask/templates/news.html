@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trader app</title>
+    <title>MundoDasAções app</title>
     <style>
         /* Add some basic styling */
         body {
@@ -51,8 +51,22 @@
             border-radius: 5px;
         }
 
+        a.next{
+            position : absolute;
+            bottom : 40px;
+            right : 10px;
+        }
+
         main {
-            width: 100%
+            width: 100%;
+            min-height:55vh;
+        }
+        section{
+            width:100%;
+           display:flex;
+           justify-content:center;
+           align-items:center;
+           flex-direction: column;
         }
         a {
             text-decoration: none;
@@ -70,13 +84,17 @@
         }
 
         h3 {
-            margin-top: 0;
+            margin: 0 auto 5px;
             text-align: left;
             background-color: #f9f9f6;
+        }
+
+        h4{
+            margin-bottom: 10px;
             margin-left: 8%;
             margin-right: 8%;
-
         }
+
         footer {
             background-color: #f4f4f4;
             padding: 6px;
@@ -101,15 +119,15 @@
         }
 
         hr {
-            color:black;
+            color:rgb(19, 18, 9);
             border: 3px solid black;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
-        <p>Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1><a href="/"><img src="{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50" height="50">MundoDasAções</a></h1>
+        <p>Deep Learning model for Stock Price Prediction and Investment Recommendations</p>
     </header>
     
     <nav>
@@ -123,7 +141,41 @@
     
     <main>
         <h2>Market News</h2>
-        <p>This is the page for the market news section.</p>
-    </main>
+        <section>
+
+            <form method="POST" style="margin: 0px 0px 20px 0px">
+                <select name="company_name">
+                    {% for company in company_names %}
+                    <option value="{{ company }}">{{ company }}</option>
+                    {% endfor %}
+                </select>
+            <button type="submit">Get News</button>
+        </form>
+        
+        {% if news %}
+        <h3>{{ selected_company }}</h3>
+        {% for article in news %}
+
+                <h4><small>{{ article.publishedAt }}</small> - {{ article.title }}</h4>
+                <p>{{ article.description }} <a href="{{ article.url }}" target="_blank">read more</a></p>
+                <div style="width:25%; border:1px solid rgb(177, 176, 176); margin: 5px auto"></div>
+                {% endfor %}
+                {% else %}
+                <p>No news available for this company.</p>
+                {% endif %}
+            </section>
+                <a class="next" href="/#future_improvement">next >>></a>
+
+            </main>
+
+    <hr/>
+    <footer>
+        <ul>
+            <li><a href="https://github.com/ekraj-pok" target="_blank">GitHub</a> /ekraj-pok</li>
+            <li><a href="https://linkedin.com/in/ekraj" target="_blank">LinkedIn</a> /ekraj</li>
+            <li><a href="mailto:ekraj.pok@gmail.com" target="_blank">Email</a> @ekraj.pok@gmail.com</li>
+        </ul>
+    </footer>
 </body>
 </html>
+

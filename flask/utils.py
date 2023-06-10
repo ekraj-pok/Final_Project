@@ -8,8 +8,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 # define function to load dataset and do some preprocessing
 def load_file(file):
-    file_path = file
-    df = pd.read_excel(file_path)
+ 
+    df = pd.read_excel(file)
     return(df)
 
 def localize_tz(df):

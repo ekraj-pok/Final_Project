@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trader app</title>
+    <title>MundoDasAções app</title>
 <head>
     <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            scroll-behavior: smooth;
         }
 
             header {
@@ -29,8 +30,9 @@
             top: 0;
             border-bottom: 2px solid snow;
             margin-bottom: 5px;
+            z-index:100;
         }
-
+      
         nav {
             background-color: #f4f4f4;
             padding: 10px;
@@ -58,17 +60,40 @@
         main {
             width: 100%
         }
+        section{
+            width:100%;
+            min-height: 70vh;
+            position:relative;
+            z-index: 0;
+        }
+        article{
+            height:100px;
+        }
+
+        section:first-of-type a.next{
+            bottom : -17px;  
+        }
+
+        a.next{
+            position : absolute;
+            bottom : -40px;
+            right : 10px;
+        }
+
+      
+      
         a {
             text-decoration: none;
+            
         }
 
         h1 a {
             color: #fff
         }
         h2 {
-            margin-top: 0;
+            margin-top: 0px;
             text-align: center;
-            background-color: #8c987a;
+            background-color: #a7a59d;
             padding: 5px;
             width: 100%;
         }
@@ -105,118 +130,150 @@
         p {
             margin-left: 10%;
             margin-right: 10%;
+            font-size: large;
         }
 
         hr {
             color:black;
-            border: 3px solid black;
+            border: 3px solid rgb(166, 165, 165);
         }
         
     </style>
 </head>
 <body>
     <header>
-        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="40", height="40">SmartTrader</a></h1>
-        <p style="font-size: 13px;">Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="Logo" width="40", height="40">MundoDasAções</a></h1>
+        <p style="font-size: 13px;">Deep Learning model for Stock Price Prediction and Investment Recommendations</p>
     </header>
     
         
-    <nav>
+    <!-- <nav>
         <ul>
             <li><a href="prediction.html">Prediction Model</a></li>
             <li><a href="live-data.html">Stock Live Data</a></li>
             <li><a href="indicators.html">Technical Indicators</a></li>
             <li><a href="news.html">Market News</a></li>
         </ul>
-    </nav>
+    </nav> -->
 
     <main>
-        <h2>Project Introduction</h2>
-        <p>This project aims to leverage the power of deep learning, specifically Convolutional Neural Networks and Long Short-Term Memory (CNN-LSTM) model,
-             to predict the closing stock prices for a one-day forward period based on time series data. Additionally, the project integrates technical analysis-based recommendations 
-             to guide investors while making buy, hold, or sell decisions.</p>
+        <section>
+            <div style="height: 60px;"></div>
+            <h2 style="background-color: white; color: blue; font-size: xx-large;">WELCOME TO THE LAUNCH EVENT OF <strong style="font-size: 45px;">MundoDasAções</strong></h2>
 
-        <br>
-        <br>
+            <div style="display:flex; flex-direction:column; align-items: center;">
+                <img src="{{ url_for('static', filename=ironhack_logo) }}" alt="Ironhack Logo" style="height: 240px; width: 240px; margin: auto;">
+                <p style="align-self: start; margin-top:70px">Presented By:  <strong>Ekraj Pokhrel</strong><span style="display:block; margin-top:10px ">Date: <strong> June 09, 2023</strong></span></p>
+                
+                
+            </div>
+                <a class="next" href="#motivation">next >>></a>
+            </section>
 
+        <article  id="motivation"></article>
+        <section>
+        <h2>Project Motivation</h2>
+            <br>
+            <p>Retail traders often faces problem while making investment decisions due to many factors.
+            like: <b>lack of experience and knowledge, emotional biases, insufficient risk management, 
+            market volatility, uncertainity</b> and so on.</p>
+            <p>Due to these problem, it is often cited that a large percentage of retail traders, ranging from <b>70% to 90%</b>, end up losing money or are not consistently profitable </p>
+            <p>This project aims to leverage the power of deep learning, specificially <b>Convolutional Neural Networks and Long Short-Term Memory (CNN-LSTM) model</b>,
+            to predict the closing stock prices for next trading day based on time series data. Additionally, the project integrates technical analysis-based recommendations 
+            to guide investors while making buy, hold, or sell decisions.</p>
+            <a class="next" href="/prediction.html">next >>></a>
+        </section>
+        <article  id="objective"></article>
+        <section >
         <h2>Objective</h2>
-        <div>
-            <p>1. Develop a CNN-LSTM model to predict stock prices for the next trading day based on historical price data.</p>
-            <p>2. Incorporate technical analysis indicators to generate buy, hold, or sell recommendations.</p>
-        </div>
-        <br>
-        <br>
-
-        <h2>Methodology</h2>
-        <div>
-            <p>1. Data Collection: Gather historical stock price data using yfinance(python wrapper for Yahoo Finance).</p>
-            <p>2. Data Preprocessing: Clean the collected data, handle missing values, and decompose the data to check seasonality, trend, and residual factors.</p>
-            <p>3. Feature Engineering: Select and engineer key features, including technical analysis indicators such 
-                as simple moving averages, exponential moving average, relative strength index (RSI), MACD, BIAS, Stochastic K,
-                Stochastic D. And time series component including trend, seasonality, and residual variables.</p>
-            <p>4. Model Development: Design, fine-tune model using the preprocessed data to predict the next 
-                day's stock prices. </p>
-            <p>5. Model Evaluation: Assess the model's performance by comparing the predicted prices against the actual stock prices. 
-                Using metrics such as Root Mean Squared Error (RMSE) and r-squared.</p>
-            <p>6. Recommendation: This section use technical analysis indicators to generate buy, hold, or sell recommendations based on predefined rules and thresholds.</p>
-        </div>  
-
-        <h2>Expected Outcome</h2>
-        <div>
-            <p>1. A trained CNN-LSTM model capable of predicting stock prices with reasonable accuracy.</p>
-            <p>1. A technical analysis-driven recommendation system that suggests buy, hold, or sell actions based on the predicted prices and technical indicators.</p>
-        </div>
-
-        <h2>Model architecture</h2>
-        <img src="{{ url_for('static', filename=image_filename) }}" alt="Project Flow">
-        <p> </p>
-
-        <br>
-        <br>
-
-        <h2>Model Evaluation</h2>
-        <div>
-            <p> After fine-tuning the model using the train set, performance of best model is measured using Root Mean Squared Error, RMSE and the  accuracy score (R-squared) on the test set.
-            <p>The results obtained are as follows: <br>
-            <p>R-squared: 0.745
-                The R-squared value of 0.745 indicates that our model explains approximately 74.5% of the variance in the target variable.</p> 
-            <p>RMSE: 0.63
-                The Root Mean Squared Error (RMSE) of 0.63 represents the average difference between the predicted values and the actual values in the test set.</p>
-            <p> </p>
-        </div>
-
-
     
-    </main>
+            <p> 1. Develop deep learnign <b>(CNN-LSTM)</b> model to predict stock prices for the next trading day based on time series data.</p>
+            <p> 2. Incorporate technical analysis indicators to generate <b>buy, hold, or sell recommendations</b>.</p>
+            <P> 3. Provide market related information in the same platform.</P>
+            <img src="{{ url_for('static', filename=machine_leraning) }}" alt="Machine Learning Image" style="height: 240px; width: 1020px; position : absolute; bottom : 20px; right : 110px; box-shadow: #a7a59d;">
+            <a class="next" href="#time_series">next >>></a>
+        </section>
 
-    <nav>
+        <article  id="time_series"></article>
+        <section >
+        <h2>Time Series Data</h2>
+            <img src="{{ url_for('static', filename=time_series) }}" alt="Time Series Component" style="height: 390px; width: auto; position : absolute; bottom : 20px; right : 110px; ">
+            <p style="display:flex; flex-direction:column; align-items: center; margin-top:450px;"><strong>Yt= St+Tt+Ct+Et</strong></p>
+            <a class="next" href="#workflow">next >>></a>
+        </section>
+
+        <article  id="workflow"></article>
+        <section>
+        <h2>Project Workflow</h2>
+            <img src="{{ url_for('static', filename=action_plan) }}" alt="project action plan" style="height: auto; width: 970px; position : absolute; bottom : 20px; right : 110px; box-shadow: #a7a59d;">
+            <a class="next" href="#outcome">next >>></a>    
+        </section>  
+
+        <article  id="outcome"></article>
+        <section>
+            <h2>Outcome</h2>
+            <p>1. A trained CNN-LSTM model capable of predicting stock prices with  accuracy.</p>
+            <p>2. A technical analysis-driven recommendation system that suggests buy, hold, or sell actions based on the predicted prices and technical indicators.</p>
+            <img src="{{ url_for('static', filename=outcome) }}" alt="test result" style="height: 320px; width: auto; position :absolute; bottom : 30px; right : 130px;">
+            <p>Test-Set: R-squared: 0.74</p>
+            <p>Test-Set: RMSE: 0.62</p>
+            <a class="next" href="/live-data.html">next >>></a>
+        </section>
+
+        <article  id="future_improvement"></article>
+        <section> 
+            <h2>Future Improvement</h2>
+            <div style="height:60vh;display:flex; align-items:center; justify-content:center">
+            <img src="{{ url_for('static', filename=future) }}" alt="Future Improvement" style="height: 200px; width: 100%S; ">
+            </div>
+            <a class="next" href="#thank_you">next >>></a>
+        </section>
+
+        <article  id="thank_you"></article>
+        <section  style="min-height: 75vh;">
+        <h2 style="font-size: 40px;">THANK YOU   <img src="{{ url_for('static', filename=namaste) }}" alt="namaste" style="height: 35px; width: 35%S; "> </h2>
+            <h3 style="text-align: center;">EKRAJ POKHREL</h3>
+            <H4 style="text-align: center; "><a href="https://linkedin.com/in/ekraj" target="_blank" style="color: black;">LinkedIn: www.linkedin.com/in/ekraj</a></H4>
+            <h4 style="text-align: center;"><a href="https://github.com/ekraj-pok" target="_blank" style="color: black;">GitHub: https://github.com/ekraj-pok</a></h4>
+            <h4 style="text-align: center;"><a href="mailto:ekraj.pok@gmail.com" target="_blank" style="color: black;">email: ekraj.pok@gmail.com</a></h4>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            
+
+            <hr/>
+                <p style = "text-align: center; color: #ff0000;">Disclaimer</p>
+                <p style="font-size: smaller; color: #333;"><b>Investing in the stock market involves risks, 
+                    and it's important to conduct thorough research and analysis before making any investment decisions.
+                     The predictions generated by this model should be used as a tool for informational purposes only
+                     and should not be solely relied upon for investment purposes. It's recommended to consult with financial
+                      advisors or professionals who specialize in the stock market before making any investment decisions.</b></p>
+                <p style="font-size: smaller; color: #333;"> <b><class style="font-size: larger;">Use at Your Own Risk:</class> The project is provided "as is"
+                     without any warranties or guarantees, express or implied. The creators and developers disclaim
+                      any liability for any direct, indirect, incidental, consequential, or special damages arising
+                       out of or in any way connected with the use of this project</b></p>
+            </section>
+    </main>
+    <!-- <nav>
         <ul>
             <li><a href="prediction.html">Prediction Model</a></li>
             <li><a href="live-data.html">Stock Live Data</a></li>
             <li><a href="indicators.html">Technical Indicators</a></li>
             <li><a href="news.html">Market News</a></li>
         </ul>
-    </nav>
-    
-    <hr/>
-    <p style = "text-align: center;">Disclaimer:</p>
-    <p style="font-size: smaller; color: #333;">Investing in the stock market involves risks, 
-        and it's important to conduct thorough research and analysis before making any investment decisions.
-         The predictions generated by this model should be used as a tool for informational purposes only
-         and should not be solely relied upon for investment purposes. It's recommended to consult with financial
-          advisors or professionals who specialize in the stock market before making any investment decisions. </p>
-    <p style="font-size: smaller; color: #333;"> <b>Use at Your Own Risk:</b> The project is provided "as is"
-         without any warranties or guarantees, express or implied. The creators and developers disclaim
-          any liability for any direct, indirect, incidental, consequential, or special damages arising
-           out of or in any way connected with the use of this project</p>
-
-
+    </nav> -->
     <hr/>
     <footer>
-        <ul>
-            <li><a href="https://github.com/stars/ekraj-pok/lists/projects" , target="_blank">GitHub</a></li>
-            <li><a href="https://linkedin.com/in/ekraj", target="_blank">LinkedIn</a></li>
-            <li><a href="mailto:ekraj.pok@gmail.com", target="_blank">Email</a></li>
-        </ul>
+        <!-- <ul>
+            <li><a href="https://github.com/ekraj-pok" target="_blank">GitHub</a> /ekraj-pok</li>
+            <li><a href="https://linkedin.com/in/ekraj" target="_blank">LinkedIn</a> /ekraj</li>
+            <li><a href="mailto:ekraj.pok@gmail.com" target="_blank">Email</a> @ekraj.pok@gmail.com</li>
+        </ul> -->
 </body>
 </html>

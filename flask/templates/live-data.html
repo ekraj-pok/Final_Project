@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trader app</title>
+    <title>MundoDasAções app</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         /* Add some basic styling */
@@ -115,8 +115,8 @@
 
 <body>
     <header>
-        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="40", height="40">SmartTrader</a></h1>
-        <p style="font-size: 13px;">Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1 style="font-size: 25px;"><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="40", height="40">MundoDasAções</a></h1>
+        <p>Deep Learning model for Stock Price Prediction and Investment Recommendations</p>
     </header>
        
 
@@ -153,7 +153,7 @@
         </div>
 
         <div class="chart-container", style="display:flex; flex-direction: column; justify-content: center; width: 100%;">
-            <div id="chartDiv" style="height: 20%">
+            <div id="chartDiv" style="height: 1%; width: 20%s;">
                 {{ chart|safe }}
             </div>
 
@@ -163,21 +163,19 @@
                         {{ historical_data|safe }}
                     </table>
                 </div>
-                <a href="dataframe.csv" download>Download</a>
-                <!-- <form action="/download" method="POST" style="width:100%; display:flex; justify-content:center">
+                <form action="/download" method="POST" style="width:100%; display:flex; justify-content:center">
                     <input type="hidden" name="csv_data" value="{{ historical_data }}">
                     <input type="submit" value="Download CSV" download="historical_data.csv">
-                </form> -->
+                </form>
 
                 
         </div>
     </main>
-
-    <script>
-        function submitForm() {
-            document.getElementById("stockForm").submit();
-        }
-    </script>
-
+    <footer>
+        <ul>
+            <li><a href="https://github.com/ekraj-pok" target="_blank">GitHub</a> /ekraj-pok</li>
+            <li><a href="https://linkedin.com/in/ekraj" target="_blank">LinkedIn</a> /ekraj</li>
+            <li><a href="mailto:ekraj.pok@gmail.com" target="_blank">Email</a> @ekraj.pok@gmail.com</li>
+        </ul>
 </body>
 </html>

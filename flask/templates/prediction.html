@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trader app</title>
+    <title>MundoDasAções app</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         /* Add some basic styling */
         body {
@@ -52,14 +53,15 @@
         }
 
         main {
-            width: 100%
+            width: 100%;
+            height: 500px;
         }
         a {
             text-decoration: none;
         }
 
         h1 a {
-            color: #fff
+            color: #fff;
         }
         h2 {
             margin-top: 0;
@@ -108,10 +110,9 @@
 </head>
 <body>
     <header>
-        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
-        <p>Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1><a href="/"><img src="{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50" height="50">MundoDasAções</a></h1>
+        <p>Deep Learning model for Stock Price Prediction and Investment Recommendations</p>
     </header>
-    
         
     <nav>
         <ul>
@@ -123,22 +124,37 @@
     </nav>
 
     <main>
-        <h2>Prediction Model</h2>
-        <h3>You can upload stock price for last 60 days to make prediction of todays price.  For now Stock Price prediction model only available for GALP.LS</h3>
-    </main>
-    <body>
-        <h1>Stock Prediction</h1>
-        {% if predict %}
-        <h2>Prediction Result</h2>
-        <p>Last Predicted Price: {{ last_predicted_price }}</p>
-        {% endif %}
-        <hr>
+        
+        <h2>Stock Price Prediction</h2>
+        <p>The model is trained with historical price of Galp Energia, SGPS, S.A. <strong>(GALP.LS)</strong>. Due to model complexity upload last two year data to make prediction.</p>
+        
         <!-- Add the file upload form -->
-        <form action="/prediction.html" method="POST" enctype="multipart/form-data">
-          <input type="file" name="file">
-          <input type="submit" value="Upload and Predict">
+        <form action="/prediction.html" method="POST" enctype="multipart/form-data" style = "display:flex; justify-content:center; width:100%">
+            <input type="file" name="file">
+            <input type="submit" value="Upload and See Today's Prediction">
         </form>
-      </body>
-    
+
+        
+        {% if predict %}
+        <h3 style="align-items: center";>Prediction Result</h3>
+        {% if chart %}
+        <div style="justify-content:center; width:100%">
+            <p style="text-align:center; width:100%; margin-right: 60px;">Todays Closing Price Prediction is: {{ last_predicted_price }} with average error: {{error}} and R-squared: {{r2}} </p>
+            <!-- Display the interactive chart using Plotly -->
+            {{ chart|safe }}
+        </div>
+        {% endif %}
+        {% endif %}
+
+        
+    </main>
+
+    <hr/>
+    <footer>
+        <ul>
+            <li><a href="https://github.com/ekraj-pok" target="_blank">GitHub</a> /ekraj-pok</li>
+            <li><a href="https://linkedin.com/in/ekraj" target="_blank">LinkedIn</a> /ekraj</li>
+            <li><a href="mailto:ekraj.pok@gmail.com" target="_blank">Email</a> @ekraj.pok@gmail.com</li>
+        </ul>
 </body>
 </html>

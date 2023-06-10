@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Trader app</title>
+    <title>MundoDasAções app</title>
     <style>
         /* Add some basic styling */
         body {
@@ -52,7 +52,29 @@
         }
 
         main {
-            width: 100%
+            width: 100%; 
+            margin: auto;
+            min-height:55vh;
+
+        }
+        section{
+            width:100%;
+           display:flex;
+           justify-content:center;
+           align-items:center;
+           flex-direction: column;
+        }
+        th, td {
+            text-align: center;
+            width:200px;
+        }
+
+        tr>td:first-of-type{
+            text-align: left;
+        }
+       
+        tr:last-of-type>td{
+            background-color: yellow;
         }
         a {
             text-decoration: none;
@@ -82,6 +104,7 @@
             padding: 6px;
             display: flex;
             justify-content: center;
+            height:40px;
         }
 
         footer ul {
@@ -93,6 +116,7 @@
 
         footer ul li {
             margin: 0 6px;
+           
         }
         
         p {
@@ -101,15 +125,16 @@
         }
 
         hr {
-            color:black;
-            border: 3px solid black;
+            margin-top: 40px;
+            color:grey;
+            border: 2px solid rgb(165, 165, 165);
         }
     </style>
 </head>
 <body>
     <header>
-        <h1><a href="/"l><img src = "{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50", height="50">SmartTrader</a></h1>
-        <p>Deep Learning Approach for Stock Price Forecasting and Investment Recommendations</p>
+        <h1><a href="/"><img src="{{ url_for('static', filename=logo_filename) }}" alt="logo" width="50" height="50">MundoDasAções</a></h1>
+        <p>Deep Learning model for Stock Price Prediction and Investment Recommendations</p>
     </header>       
 
     <nav>
@@ -123,5 +148,54 @@
 
     <main>
         <h2>Technical Indicators</h2>
-        <p>This is the page for the technical indicators section.</p>
-   
+        <section>
+
+            <p>In this section you can get Buy, Sell, or Hold recommendation based on 8 technical indicators. Please select your stock and term of your interest</p>
+            
+            <form action="/indicators.html" method="post">
+                <label for="stock">Select Stock:</label>
+                <select name="stock" id="stock">
+                    {% for symbol in symbols %}
+                    <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for="term">Select Term:</label>
+                <select name="term" id="term">
+                    <option value="1d">Short Term</option>
+                    <option value="1mo">Medium Term</option>
+                </select>
+                <br>
+                <input type="submit" value="Generate Recommendations">
+            </form>
+            
+            {% if recommendations %}
+            
+                    <h3>Recommendations:</h3>
+            <table>
+                <tr>
+                    <th>Indicator</th>
+                    <th>Recommendation</th>
+                </tr>
+                {% for indicator, recommendation in recommendations.items() %}
+                <tr>
+                        <td>{{ indicator }}</td>
+                        <td>{{ recommendation }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
+            {% endif %}
+        </section>
+        </main>
+    
+        <hr/>
+    
+        <footer>
+            <ul>
+                <li><a href="https://github.com/ekraj-pok" target="_blank">GitHub</a> /ekraj-pok</li>
+                <li><a href="https://linkedin.com/in/ekraj" target="_blank">LinkedIn</a> /ekraj</li>
+                <li><a href="mailto:ekraj.pok@gmail.com" target="_blank">Email</a> @ekraj.pok@gmail.com</li>
+            </ul>
+    </footer>
+</body>
+</html>
