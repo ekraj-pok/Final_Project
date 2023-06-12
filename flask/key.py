@@ -1,3 +1,3 @@
 def api_key():
-    key = "xxxxxxxxxx"  # Enter your api key
+    key = "your newsapi key"
     return key

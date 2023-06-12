@@ -1,35 +1,24 @@
-from flask import Flask, render_template, request, session, send_file, Response, make_response
+from flask import Flask, render_template, request, session, send_file, make_response
 import requests
 import yfinance as yf
 import pandas as pd
 import numpy as np
-import json
-import datetime
 import os
-from io import StringIO
-import csv
 from utils import load_file, localize_tz, additive_decom, calculate_technical_indicators
-from key import api_key
+from key import api_key  # in key.py file update your news api key. 
+
 from datetime import datetime, timedelta
 from keras.models import load_model
 from sklearn.metrics import r2_score
-import pytz
-from pylab import rcParams
 import matplotlib.pyplot as plt
-import plotly.express as px
 import plotly.graph_objects as go
-import seaborn as sns
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
-
 from keras.models import load_model
-from werkzeug.utils import secure_filename
-
 import joblib
 
 
 app = Flask(__name__)
-app.secret_key = 'Todays_Scession'  # Set the secret key for session management
+app.secret_key = 'Todays_Scession'  # Set the secret key for session management which can basically anything.
 
 
 # define route for home page
@@ -72,19 +61,17 @@ def predict():
         'Seasonality', 'Residual']]
         y = df["target"]
 
-        # Scale the features and target
-        #scaler = MinMaxScaler()
+        # Scale the features and target, load the scaler saved during  model training
         scaler_X = joblib.load("C:/Users/udaya/Desktop/Bootcamp/Project/X_scaler.save")  
         X_scaled = scaler_X.transform(X)
-        # scaler_y = MinMaxScaler()
-        # y_scaled = scaler_y.fit_transform(y.values.reshape(-1, 1))
+      
         scaler_y = joblib.load("C:/Users/udaya/Desktop/Bootcamp/Project/y_scaler.save")
         y_scales = scaler_y.transform(y.values.reshape(-1, 1))
 
         
 
         # Prepare the input sequences
-        window_size = 20
+        window_size = 20    # 20 days yields best result so far. you can try with higher or lower window size. 
         X_test = []
         for i in range(window_size, len(X_scaled)):
             X_test.append(X_scaled[i - window_size:i])
@@ -93,14 +80,13 @@ def predict():
         X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], X_test.shape[2]))
 
         
-        # Construct the absolute file path to load and save model
-        base_path = os.path.abspath('C:/Users/udaya/Desktop/Bootcamp/Project/flask/galp_final.h5')
+        # Construct the absolute file path to load saved model
+        base_path = os.path.abspath('C:/Users/udaya/Desktop/Bootcamp/Project/flask/galp_final.h5')   # change the filepath according to your pc directory. 
         loaded_model = load_model(base_path)
         # Make predictions
         pred = loaded_model.predict(X_test)                                 
         predicted_prices = pd.DataFrame(scaler_y.inverse_transform(pred))
-        """predicted_price = predicted_prices.set_index(X[window_size:].index)
-        y = pd.concat([y, predicted_price], axis=1).reindex(y.index)"""
+      
 
         # Get the last predicted price
         last_predicted_price = predicted_prices.iloc[-1][0].round(2)
@@ -125,8 +111,7 @@ def predict():
                                 name='Predicted Price'))
         # Set the layout with a date slider
         fig.update_layout(xaxis_rangeslider_visible=True)
-        # Create the figure
-        # figure = go.Figure(data=[actual_trace, predicted_trace], layout=layout)
+       
         # Convert the figure to JSON and pass it to the template
         chart = fig.to_html(full_html=True)
 
@@ -147,7 +132,7 @@ def live_data():
                'GVOLT.LS', 'IBS.LS', 'IPR.LS', 'INA.LS', 'JMT.LS', 'LIG.LS', 'MAR.LS', 'MCP.LS', 'MRL.LS', 'EGL.LS', 'NOS.LS', 'NBA.LS', 'PHR.LS',
                'RAM.LS', 'RED.LS', 'RENE.LS', 'SEM.LS', 'SON.LS', 'SNC.LS', 'SCP.LS', 'TDSA.LS', 'NVG.LS', 'VAF.LS', '^STOXX50E', '^EVZ', 'PSI20.LS']
 
-    intervals = ["1d", "1h", "1m", "1wk", "1mo"]  # Available intervals
+    intervals = ["1d", "1h", "1m", "1wk", "1mo"]  # Available intervals in this model
 
     if request.method == "POST":
         selected_stock = request.form["stockSelect"]
@@ -158,7 +143,7 @@ def live_data():
 
     today = datetime.now().date()
     
-    # Set the appropriate period and start date based on the selected interval
+    # Set the appropriate period and start date based on the selected interval ### here you can define desired number of days you want to get data. check the api documentation for available maximum window.
     if selected_interval == '1d':  # Daily interval
         period = '2y'
         start = today - timedelta(days=2*365-1)
@@ -176,7 +161,6 @@ def live_data():
         start = None
 
     # Fetch live stock data using yfinance
-
     stock = yf.Ticker(selected_stock)
 
     # Check if the data is already stored in the session
@@ -221,35 +205,8 @@ def live_data():
                            selected_stock=selected_stock, selected_interval=selected_interval, historical_data=historical_data, logo_filename = logo_filename)
     
 
-
-
-"""@app.route('/download', methods=['POST'])
-def download_csv():
-    csv_data = request.form['csv_data']
-    response = make_response(csv_data)
-    response.headers['Content-Disposition'] = 'attachment; filename=historical_data.csv'
-    response.headers['Content-type'] = 'text/csv'
-
-    return response
-"""
-    
-"""@app.route('/download', methods=['POST'])
-def download():
-    # Retrieve the historical data from the session
-    
-    data = pd.read_html(historical_data)
-    data = data.to_excel(data)
-    if data:
-        # Create a CSV file with the historical data
-        csv_filename = 'historical_data.csv'
-        with open(csv_filename, 'w') as file:
-            file.write(data)
-
-        # Return the CSV file as a download response
-        return send_file(csv_filename, as_attachment=True)
-
-    # Return an error message if historical data is not found in the session
-    return "No historical data available for download."""
+## this section consist of custom functions used to recommend buy sell or hold recommendation in technical_indicator route. 
+# if you want you can make separate py file and import these function here. 
 
 # Define the list of stock symbols
 symbols = ['ALTR.LS', 'BCP.LS', 'SLBEN.LS', 'CFN.LS', 'COR.LS', 'CTT.LS', 'EDP.LS', 'EDPR.LS', 'ESON.LS', 'FCP.LS', 'GALP.LS', 'GLINT.LS',
@@ -257,12 +214,16 @@ symbols = ['ALTR.LS', 'BCP.LS', 'SLBEN.LS', 'CFN.LS', 'COR.LS', 'CTT.LS', 'EDP.L
         'RAM.LS', 'RED.LS', 'RENE.LS', 'SEM.LS', 'SON.LS', 'SNC.LS', 'SCP.LS', 'TDSA.LS', 'NVG.LS', 'VAF.LS', '^STOXX50E', '^EVZ', 'PSI20.LS']
 
 # Define the recommendation thresholds
+## Here i put dummy threshold to generate recommendation. you can specify weight for each indicator if you want. 
 buy_threshold = 4
 sell_threshold = 4
 
 # Define route for technical indicator
 @app.route('/indicators.html', methods=["GET", "POST"])
 def technical_indicator():
+    """
+    Generate recommendation
+    """
     logo_filename = "my_logo.png"
     recommendations = {}
 
@@ -582,12 +543,12 @@ def get_market_news():
                 news.append(article)
         else:
             print('Request failed with status code:', response.status_code)
+            news = []
         
         return render_template("news.html", logo_filename=logo_filename, company_names=company_names,
                                selected_company=selected_company, news=news, datetime=datetime)
     
     return render_template("news.html", logo_filename=logo_filename, company_names=company_names)
-
 
 
 if __name__ == '__main__':
